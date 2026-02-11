@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard – SkillsDoc</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Outfit', sans-serif; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen relative overflow-hidden flex flex-col">
+
+  <nav class="flex justify-between items-center p-6 relative z-10 mx-4 mt-4 glass-card rounded-2xl">
+    <div class="flex items-center gap-3">
+      <div class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-2 rounded-lg shadow-lg">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+      </div>
+      <div>
+        <span class="text-xl font-bold text-gray-800 tracking-tight">SkillsDoc</span>
+        <span class="text-xs text-purple-600 block font-medium">Local Engine v2.0</span>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-4">
+      <div class="hidden md:flex items-center gap-2 text-right">
+        <p id="navUserName" class="text-sm font-bold text-gray-700">Loading...</p>
+        <img id="navUserImg" src="https://ui-avatars.com/api/?name=User" class="w-8 h-8 rounded-full border border-purple-200">
+      </div>
+      <button id="logoutBtn" class="text-sm font-medium text-gray-500 hover:text-red-500 bg-white px-3 py-1 rounded-lg border border-gray-200 hover:border-red-200 transition">Log out</button>
+    </div>
+  </nav>
+
+  <main class="flex-1 flex flex-col items-center px-4 py-10 relative z-10 w-full max-w-6xl mx-auto">
+    
+    <div id="loadingState" class="flex flex-col items-center justify-center h-64">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mb-4"></div>
+        <p class="text-purple-600 animate-pulse">Syncing profile...</p>
+    </div>
+
+    <div id="returningUserView" class="hidden w-full animate-fade-in-up">
+        <div class="flex flex-col md:flex-row gap-8 items-start">
+            <div class="w-full md:w-5/12 glass-card rounded-xl p-8 border border-gray-200">
+                <h2 class="text-xl font-bold text-gray-900 mb-2">👋 Welcome Back!</h2>
+                <h1 id="previewName" class="text-3xl font-bold text-purple-700 mb-1">User Name</h1>
+                <p id="previewRole" class="text-gray-600 font-medium text-lg">Role Title</p>
+                <div class="mt-6 flex flex-col gap-3">
+                    <a href="generate.html" class="bg-purple-600 hover:bg-purple-700 text-center text-white px-6 py-3 rounded-xl font-bold shadow-lg transition">✏️ Edit Resume</a>
+                    <a href="app.html" class="bg-gray-100 hover:bg-gray-200 text-center text-gray-800 px-6 py-3 rounded-xl font-medium shadow-sm transition">📂 Manage Skills</a>
+                </div>
+            </div>
+            <div class="w-full md:w-7/12">
+                <div class="glass-card p-6 rounded-xl border-l-4 border-indigo-500 flex justify-between items-center cursor-pointer hover:bg-purple-50 transition" onclick="switchView('newUserView')">
+                    <div>
+                        <h3 class="font-bold text-gray-900">Start Over?</h3>
+                        <p class="text-sm text-gray-500">Upload a new resume to restart.</p>
+                    </div>
+                    <span class="text-indigo-600 font-bold text-2xl">→</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="newUserView" class="hidden w-full text-center max-w-5xl animate-fade-in-up">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Build Your Profile</h1>
+        <p class="text-lg text-gray-600 mb-10">Scan your resume instantly (No AI required).</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div onclick="openUploadModal()" class="glass-card rounded-2xl p-8 cursor-pointer group text-center hover:border-purple-500 transition relative">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">📤</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Scan Resume</h3>
+                <p class="text-gray-500 text-sm">Upload PDF/Word or Paste Text.</p>
+            </div>
+            <a href="app.html" class="glass-card rounded-2xl p-8 cursor-pointer group text-center hover:border-blue-500 transition">
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">✍️</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Manual Entry</h3>
+                <p class="text-gray-500 text-sm">Type your details from scratch.</p>
+            </a>
+            <a href="generate.html" class="glass-card rounded-2xl p-8 cursor-pointer group text-center hover:border-green-500 transition border-green-200 bg-green-50/30">
+                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">🚀</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Resume Builder</h3>
+                <p class="text-gray-500 text-sm">Skip setup, go to builder.</p>
+            </a>
+        </div>
+    </div>
+  </main>
+
+  <div id="uploadModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl w-full max-w-2xl p-8 shadow-2xl relative">
+      <button onclick="closeUploadModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl">×</button>
+      <h2 class="text-2xl font-bold text-gray-800 mb-2">Upload or Paste Resume</h2>
+      
+      <div id="dropZone" class="border-2 border-dashed border-purple-300 rounded-xl bg-purple-50 p-6 cursor-pointer hover:bg-purple-100 transition relative text-center">
+          <input type="file" id="fileInput" accept=".pdf,.docx,.doc" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+          <div class="pointer-events-none">
+              <div class="text-3xl mb-2">📄</div>
+              <p class="font-bold text-purple-700">Click to Upload PDF/Word</p>
+          </div>
+      </div>
+
+      <div class="mt-4">
+          <label class="text-xs font-bold text-gray-500 uppercase">Resume Text (Editable)</label>
+          <textarea id="resumeText" class="w-full h-40 border p-3 rounded-lg text-sm bg-gray-50 focus:ring-2 ring-purple-500 outline-none" placeholder="If upload fails, PASTE your resume text here..."></textarea>
+      </div>
+
+      <div id="uploadStatus" class="mt-2 text-sm font-medium text-gray-600 hidden">⏳ Reading...</div>
+
+      <button id="processBtn" class="mt-4 w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold shadow-lg transition">
+          🔍 Scan for Skills
+      </button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCn3sLUtlC2q0EXguvQr7HS3ocol4k-Gtg",
+      authDomain: "resume-ai-6c8ce.firebaseapp.com",
+      projectId: "resume-ai-6c8ce",
+      storageBucket: "resume-ai-6c8ce.firebasestorage.app",
+      messagingSenderId: "80667329410",
+      appId: "1:80667329410:web:00d0783305e073a9e0c59b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    let currentUid = null;
+
+    // 📚 EXPANDED LOCAL DATABASE (Matches your resume skills)
+    const SKILL_DB = [
+        "Arduino", "ESP8266", "IoT", "Sensors", "Circuit Design", "PCB", "Fusion 360", "AutoCAD", "AutoCAD Electrical",
+        "Flutter", "Dart", "Firebase", "HTML", "CSS", "JavaScript", "JS", "Python", "C", "C++",
+        "Machine Learning", "ML", "Kali Linux", "Cybersecurity", "Embedded Systems",
+        "React", "Node.js", "SQL", "Git", "GitHub", "Microsoft Office", "VS Code"
+    ];
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { window.location.href = "login.html"; return; }
+      currentUid = user.uid;
+      document.getElementById("navUserName").textContent = user.displayName || "User";
+      document.getElementById("navUserImg").src = user.photoURL || "https://ui-avatars.com/api/?name=User";
+
+      try {
+        const docSnap = await getDoc(doc(db, "users", user.uid));
+        document.getElementById("loadingState").classList.add("hidden");
+        if (docSnap.exists() && (docSnap.data().course || docSnap.data().college)) {
+            const data = docSnap.data();
+            document.getElementById("previewName").textContent = data.displayName || user.displayName;
+            document.getElementById("previewRole").textContent = data.course || "Your Role";
+            document.getElementById("returningUserView").classList.remove("hidden");
+        } else {
+            document.getElementById("newUserView").classList.remove("hidden");
+        }
+      } catch (e) {
+        document.getElementById("newUserView").classList.remove("hidden");
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => signOut(auth).then(() => window.location.href = "login.html"));
+    window.switchView = (id) => {
+        document.getElementById("returningUserView").classList.add("hidden");
+        document.getElementById("newUserView").classList.add("hidden");
+        document.getElementById(id).classList.remove("hidden");
+    };
+    window.openUploadModal = () => document.getElementById("uploadModal").classList.remove("hidden");
+    window.closeUploadModal = () => document.getElementById("uploadModal").classList.add("hidden");
+
+    // FILE HANDLING
+    const fileInput = document.getElementById("fileInput");
+    const dropZone = document.getElementById("dropZone");
+    const resumeTextArea = document.getElementById("resumeText");
+    const statusText = document.getElementById("uploadStatus");
+
+    dropZone.addEventListener("dragover", (e) => { e.preventDefault(); dropZone.classList.add("bg-purple-200"); });
+    dropZone.addEventListener("dragleave", (e) => { e.preventDefault(); dropZone.classList.remove("bg-purple-200"); });
+    dropZone.addEventListener("drop", (e) => { e.preventDefault(); dropZone.classList.remove("bg-purple-200"); handleFile(e.dataTransfer.files[0]); });
+    fileInput.addEventListener("change", (e) => handleFile(e.target.files[0]));
+
+    async function handleFile(file) {
+        statusText.classList.remove("hidden");
+        statusText.textContent = `⏳ Reading ${file.name}...`;
+        
+        try {
+            const arrayBuffer = await file.arrayBuffer();
+            let text = "";
+
+            if (file.type === "application/pdf") {
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                for (let i = 1; i <= Math.min(pdf.numPages, 3); i++) {
+                    const page = await pdf.getPage(i);
+                    const content = await page.getTextContent();
+                    text += content.items.map(item => item.str).join(" ") + "\n";
+                }
+            } else if (file.name.endsWith(".docx")) {
+                const result = await mammoth.extractRawText({ arrayBuffer });
+                text = result.value;
+            } else { throw new Error("Only PDF or DOCX allowed."); }
+
+            resumeTextArea.value = text; // 👈 POPULATE TEXT AREA
+            statusText.textContent = "✅ File read! You can edit the text above.";
+        } catch (err) {
+            statusText.textContent = "❌ Error: " + err.message;
+        }
+    }
+
+    // 🔍 SCAN LOGIC
+    document.getElementById("processBtn").onclick = async function() {
+        const text = resumeTextArea.value.trim();
+        if(!text) return alert("Please upload a file or paste text first.");
+
+        this.innerHTML = "🔍 Scanning...";
+        this.disabled = true;
+
+        // 1. Extract Details
+        const emailMatch = text.match(/[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}/);
+        const email = emailMatch ? emailMatch[0] : auth.currentUser.email;
+        
+        const lines = text.split('\n').filter(l => l.trim().length > 0);
+        let name = "User";
+        if(lines.length > 0 && lines[0].split(" ").length < 5) name = lines[0].trim();
+
+        // 2. Scan Skills
+        const foundSkills = [];
+        const lowerText = text.toLowerCase();
+        
+        SKILL_DB.forEach(skill => {
+            const escaped = skill.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            // Check exact word OR substring match (e.g. catches "IoT" in "IoT-based")
+            if (new RegExp(`\\b${escaped.toLowerCase()}\\b`).test(lowerText) || lowerText.includes(skill.toLowerCase())) {
+                if(!foundSkills.includes(skill)) foundSkills.push(skill);
+            }
+        });
+
+        // 3. Save
+        try {
+            await setDoc(doc(db, "users", currentUid), { displayName: name, email, course: "Student" }, { merge: true });
+            
+            if(foundSkills.length > 0) {
+                const batch = foundSkills.map(s => addDoc(collection(db, "skills"), { uid: currentUid, title: s, desc: "Auto-Scanned", timestamp: Date.now() }));
+                await Promise.all(batch);
+            }
+
+            alert(`✅ Found ${foundSkills.length} skills! Redirecting...`);
+            window.location.href = "app.html";
+        } catch (err) {
+            alert("Save Error: " + err.message);
+            this.disabled = false;
+        }
+    };
+  </script>
+</body>
+</html>

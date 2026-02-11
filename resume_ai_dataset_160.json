@@ -1,0 +1,802 @@
+[
+  {
+    "input": "Worked as AI intern at Cognizant",
+    "label": "Internship",
+    "output": "Worked as an Artificial Intelligence intern at Cognizant, developing predictive models."
+  },
+  {
+    "input": "Won 1st prize at Hackify 2.0 college hackathon",
+    "label": "Achievement",
+    "output": "Secured First Place at Hackify 2.0 Hackathon hosted at MACE."
+  },
+  {
+    "input": "Explored REST APIs and how to connect Flutter with backend",
+    "label": "Topic Learned",
+    "output": "Explored REST APIs and integrated Flutter frontend with backend services."
+  },
+  {
+    "input": "Learned basics of machine learning including supervised and unsupervised models",
+    "label": "Topic Learned",
+    "output": "Studied fundamentals of machine learning, including supervised and unsupervised algorithms."
+  },
+  {
+    "input": "Won 1st prize at Hackify 2.0 college hackathon",
+    "label": "Achievement",
+    "output": "Secured First Place at Hackify 2.0 Hackathon hosted at MACE."
+  },
+  {
+    "input": "Won 1st prize at Hackify 2.0 college hackathon",
+    "label": "Achievement",
+    "output": "Secured First Place at Hackify 2.0 Hackathon hosted at MACE."
+  },
+  {
+    "input": "Learned basics of machine learning including supervised and unsupervised models",
+    "label": "Topic Learned",
+    "output": "Studied fundamentals of machine learning, including supervised and unsupervised algorithms."
+  },
+  {
+    "input": "Completed Google ML Crash Course",
+    "label": "Certification",
+    "output": "Successfully completed Google Machine Learning Crash Course."
+  },
+  {
+    "input": "Interned at TCS in Summer 2024 for backend development",
+    "label": "Internship",
+    "output": "Completed a summer internship at TCS in 2024 focusing on backend development."
+  },
+  {
+    "input": "Learned basics of machine learning including supervised and unsupervised models",
+    "label": "Topic Learned",
+    "output": "Studied fundamentals of machine learning, including supervised and unsupervised algorithms."
+  },
+  {
+    "input": "Certified in Flutter Bootcamp by Udemy",
+    "label": "Certification",
+    "output": "Earned certification for completing Flutter Bootcamp from Udemy."
+  },
+  {
+    "input": "Certified in Flutter Bootcamp by Udemy",
+    "label": "Certification",
+    "output": "Earned certification for completing Flutter Bootcamp from Udemy."
+  },
+  {
+    "input": "Won 1st prize at Hackify 2.0 college hackathon",
+    "label": "Achievement",
+    "output": "Secured First Place at Hackify 2.0 Hackathon hosted at MACE."
+  },
+  {
+    "input": "Built a WiFi-controlled locker with Arduino and servo",
+    "label": "Project (Small)",
+    "output": "Implemented a WiFi-controlled locker system using Arduino and SG90 servo motor."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "Worked as AI intern at Cognizant",
+    "label": "Internship",
+    "output": "Worked as an Artificial Intelligence intern at Cognizant, developing predictive models."
+  },
+  {
+    "input": "Interned at TCS in Summer 2024 for backend development",
+    "label": "Internship",
+    "output": "Completed a summer internship at TCS in 2024 focusing on backend development."
+  },
+  {
+    "input": "Created a temperature monitor using LM35 and LCD",
+    "label": "Project (Small)",
+    "output": "Designed a temperature monitoring system using LM35 sensor with LCD display."
+  },
+  {
+    "input": "Built a WiFi-controlled locker with Arduino and servo",
+    "label": "Project (Small)",
+    "output": "Implemented a WiFi-controlled locker system using Arduino and SG90 servo motor."
+  },
+  {
+    "input": "IEEE ComSoc member and active in college events",
+    "label": "Volunteering / Club Membership",
+    "output": "Active member of IEEE Communications Society (ComSoc), participated in multiple technical events."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "Completed class 12 with 95% from CBSE",
+    "label": "Education",
+    "output": "Secured 95% in Class 12 under CBSE board."
+  },
+  {
+    "input": "IEEE ComSoc member and active in college events",
+    "label": "Volunteering / Club Membership",
+    "output": "Active member of IEEE Communications Society (ComSoc), participated in multiple technical events."
+  },
+  {
+    "input": "Created a temperature monitor using LM35 and LCD",
+    "label": "Project (Small)",
+    "output": "Designed a temperature monitoring system using LM35 sensor with LCD display."
+  },
+  {
+    "input": "Created a smart irrigation system using ESP8266 and Firebase",
+    "label": "Project (Big)",
+    "output": "Designed a smart irrigation system using ESP8266 and Firebase for automated watering control."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "Learned basics of machine learning including supervised and unsupervised models",
+    "label": "Topic Learned",
+    "output": "Studied fundamentals of machine learning, including supervised and unsupervised algorithms."
+  },
+  {
+    "input": "Created a temperature monitor using LM35 and LCD",
+    "label": "Project (Small)",
+    "output": "Designed a temperature monitoring system using LM35 sensor with LCD display."
+  },
+  {
+    "input": "ISTE documentation team sub-committee",
+    "label": "Volunteering / Club Membership",
+    "output": "Served as sub-committee member in ISTE documentation team, contributing to content writing."
+  },
+  {
+    "input": "Created a smart irrigation system using ESP8266 and Firebase",
+    "label": "Project (Big)",
+    "output": "Designed a smart irrigation system using ESP8266 and Firebase for automated watering control."
+  },
+  {
+    "input": "Completed class 12 with 95% from CBSE",
+    "label": "Education",
+    "output": "Secured 95% in Class 12 under CBSE board."
+  },
+  {
+    "input": "Certified in Flutter Bootcamp by Udemy",
+    "label": "Certification",
+    "output": "Earned certification for completing Flutter Bootcamp from Udemy."
+  },
+  {
+    "input": "Created a smart irrigation system using ESP8266 and Firebase",
+    "label": "Project (Big)",
+    "output": "Designed a smart irrigation system using ESP8266 and Firebase for automated watering control."
+  },
+  {
+    "input": "Learned basics of machine learning including supervised and unsupervised models",
+    "label": "Topic Learned",
+    "output": "Studied fundamentals of machine learning, including supervised and unsupervised algorithms."
+  },
+  {
+    "input": "Certified in Flutter Bootcamp by Udemy",
+    "label": "Certification",
+    "output": "Earned certification for completing Flutter Bootcamp from Udemy."
+  },
+  {
+    "input": "Worked as AI intern at Cognizant",
+    "label": "Internship",
+    "output": "Worked as an Artificial Intelligence intern at Cognizant, developing predictive models."
+  },
+  {
+    "input": "Certified in Flutter Bootcamp by Udemy",
+    "label": "Certification",
+    "output": "Earned certification for completing Flutter Bootcamp from Udemy."
+  },
+  {
+    "input": "Developed a Flutter-based music player with real-time equalizer and seekbar",
+    "label": "Project (Big)",
+    "output": "Built a Flutter-based music player app with real-time seekbar, equalizer, and intuitive UI."
+  },
+  {
+    "input": "Completed Google ML Crash Course",
+    "label": "Certification",
+    "output": "Successfully completed Google Machine Learning Crash Course."
+  },
+  {
+    "input": "Completed Google ML Crash Course",
+    "label": "Certification",
+    "output": "Successfully completed Google Machine Learning Crash Course."
+  },
+  {
+    "input": "Developed a Flutter-based music player with real-time equalizer and seekbar",
+    "label": "Project (Big)",
+    "output": "Built a Flutter-based music player app with real-time seekbar, equalizer, and intuitive UI."
+  },
+  {
+    "input": "Completed Google ML Crash Course",
+    "label": "Certification",
+    "output": "Successfully completed Google Machine Learning Crash Course."
+  },
+  {
+    "input": "Worked as AI intern at Cognizant",
+    "label": "Internship",
+    "output": "Worked as an Artificial Intelligence intern at Cognizant, developing predictive models."
+  },
+  {
+    "input": "Learned basics of machine learning including supervised and unsupervised models",
+    "label": "Topic Learned",
+    "output": "Studied fundamentals of machine learning, including supervised and unsupervised algorithms."
+  },
+  {
+    "input": "ISTE documentation team sub-committee",
+    "label": "Volunteering / Club Membership",
+    "output": "Served as sub-committee member in ISTE documentation team, contributing to content writing."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "Completed Google ML Crash Course",
+    "label": "Certification",
+    "output": "Successfully completed Google Machine Learning Crash Course."
+  },
+  {
+    "input": "Explored REST APIs and how to connect Flutter with backend",
+    "label": "Topic Learned",
+    "output": "Explored REST APIs and integrated Flutter frontend with backend services."
+  },
+  {
+    "input": "ISTE documentation team sub-committee",
+    "label": "Volunteering / Club Membership",
+    "output": "Served as sub-committee member in ISTE documentation team, contributing to content writing."
+  },
+  {
+    "input": "IEEE ComSoc member and active in college events",
+    "label": "Volunteering / Club Membership",
+    "output": "Active member of IEEE Communications Society (ComSoc), participated in multiple technical events."
+  },
+  {
+    "input": "Learned basics of machine learning including supervised and unsupervised models",
+    "label": "Topic Learned",
+    "output": "Studied fundamentals of machine learning, including supervised and unsupervised algorithms."
+  },
+  {
+    "input": "IEEE ComSoc member and active in college events",
+    "label": "Volunteering / Club Membership",
+    "output": "Active member of IEEE Communications Society (ComSoc), participated in multiple technical events."
+  },
+  {
+    "input": "Completed class 12 with 95% from CBSE",
+    "label": "Education",
+    "output": "Secured 95% in Class 12 under CBSE board."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "Learned basics of machine learning including supervised and unsupervised models",
+    "label": "Topic Learned",
+    "output": "Studied fundamentals of machine learning, including supervised and unsupervised algorithms."
+  },
+  {
+    "input": "Completed class 12 with 95% from CBSE",
+    "label": "Education",
+    "output": "Secured 95% in Class 12 under CBSE board."
+  },
+  {
+    "input": "Interned at TCS in Summer 2024 for backend development",
+    "label": "Internship",
+    "output": "Completed a summer internship at TCS in 2024 focusing on backend development."
+  },
+  {
+    "input": "IEEE ComSoc member and active in college events",
+    "label": "Volunteering / Club Membership",
+    "output": "Active member of IEEE Communications Society (ComSoc), participated in multiple technical events."
+  },
+  {
+    "input": "Created a smart irrigation system using ESP8266 and Firebase",
+    "label": "Project (Big)",
+    "output": "Designed a smart irrigation system using ESP8266 and Firebase for automated watering control."
+  },
+  {
+    "input": "Completed Google ML Crash Course",
+    "label": "Certification",
+    "output": "Successfully completed Google Machine Learning Crash Course."
+  },
+  {
+    "input": "Worked as AI intern at Cognizant",
+    "label": "Internship",
+    "output": "Worked as an Artificial Intelligence intern at Cognizant, developing predictive models."
+  },
+  {
+    "input": "Certified in Flutter Bootcamp by Udemy",
+    "label": "Certification",
+    "output": "Earned certification for completing Flutter Bootcamp from Udemy."
+  },
+  {
+    "input": "Built a WiFi-controlled locker with Arduino and servo",
+    "label": "Project (Small)",
+    "output": "Implemented a WiFi-controlled locker system using Arduino and SG90 servo motor."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "Certified in Flutter Bootcamp by Udemy",
+    "label": "Certification",
+    "output": "Earned certification for completing Flutter Bootcamp from Udemy."
+  },
+  {
+    "input": "Interned at TCS in Summer 2024 for backend development",
+    "label": "Internship",
+    "output": "Completed a summer internship at TCS in 2024 focusing on backend development."
+  },
+  {
+    "input": "Built a WiFi-controlled locker with Arduino and servo",
+    "label": "Project (Small)",
+    "output": "Implemented a WiFi-controlled locker system using Arduino and SG90 servo motor."
+  },
+  {
+    "input": "Built a WiFi-controlled locker with Arduino and servo",
+    "label": "Project (Small)",
+    "output": "Implemented a WiFi-controlled locker system using Arduino and SG90 servo motor."
+  },
+  {
+    "input": "Created a smart irrigation system using ESP8266 and Firebase",
+    "label": "Project (Big)",
+    "output": "Designed a smart irrigation system using ESP8266 and Firebase for automated watering control."
+  },
+  {
+    "input": "Created a temperature monitor using LM35 and LCD",
+    "label": "Project (Small)",
+    "output": "Designed a temperature monitoring system using LM35 sensor with LCD display."
+  },
+  {
+    "input": "Completed class 12 with 95% from CBSE",
+    "label": "Education",
+    "output": "Secured 95% in Class 12 under CBSE board."
+  },
+  {
+    "input": "Worked as AI intern at Cognizant",
+    "label": "Internship",
+    "output": "Worked as an Artificial Intelligence intern at Cognizant, developing predictive models."
+  },
+  {
+    "input": "Completed class 12 with 95% from CBSE",
+    "label": "Education",
+    "output": "Secured 95% in Class 12 under CBSE board."
+  },
+  {
+    "input": "Won 1st prize at Hackify 2.0 college hackathon",
+    "label": "Achievement",
+    "output": "Secured First Place at Hackify 2.0 Hackathon hosted at MACE."
+  },
+  {
+    "input": "Created a smart irrigation system using ESP8266 and Firebase",
+    "label": "Project (Big)",
+    "output": "Designed a smart irrigation system using ESP8266 and Firebase for automated watering control."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "Won 1st prize at Hackify 2.0 college hackathon",
+    "label": "Achievement",
+    "output": "Secured First Place at Hackify 2.0 Hackathon hosted at MACE."
+  },
+  {
+    "input": "Learned basics of machine learning including supervised and unsupervised models",
+    "label": "Topic Learned",
+    "output": "Studied fundamentals of machine learning, including supervised and unsupervised algorithms."
+  },
+  {
+    "input": "Won 1st prize at Hackify 2.0 college hackathon",
+    "label": "Achievement",
+    "output": "Secured First Place at Hackify 2.0 Hackathon hosted at MACE."
+  },
+  {
+    "input": "Certified in Flutter Bootcamp by Udemy",
+    "label": "Certification",
+    "output": "Earned certification for completing Flutter Bootcamp from Udemy."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "ISTE documentation team sub-committee",
+    "label": "Volunteering / Club Membership",
+    "output": "Served as sub-committee member in ISTE documentation team, contributing to content writing."
+  },
+  {
+    "input": "Built a WiFi-controlled locker with Arduino and servo",
+    "label": "Project (Small)",
+    "output": "Implemented a WiFi-controlled locker system using Arduino and SG90 servo motor."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "Created a temperature monitor using LM35 and LCD",
+    "label": "Project (Small)",
+    "output": "Designed a temperature monitoring system using LM35 sensor with LCD display."
+  },
+  {
+    "input": "Created a smart irrigation system using ESP8266 and Firebase",
+    "label": "Project (Big)",
+    "output": "Designed a smart irrigation system using ESP8266 and Firebase for automated watering control."
+  },
+  {
+    "input": "Worked as AI intern at Cognizant",
+    "label": "Internship",
+    "output": "Worked as an Artificial Intelligence intern at Cognizant, developing predictive models."
+  },
+  {
+    "input": "Completed Google ML Crash Course",
+    "label": "Certification",
+    "output": "Successfully completed Google Machine Learning Crash Course."
+  },
+  {
+    "input": "Learned basics of machine learning including supervised and unsupervised models",
+    "label": "Topic Learned",
+    "output": "Studied fundamentals of machine learning, including supervised and unsupervised algorithms."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "Certified in Flutter Bootcamp by Udemy",
+    "label": "Certification",
+    "output": "Earned certification for completing Flutter Bootcamp from Udemy."
+  },
+  {
+    "input": "Worked as AI intern at Cognizant",
+    "label": "Internship",
+    "output": "Worked as an Artificial Intelligence intern at Cognizant, developing predictive models."
+  },
+  {
+    "input": "Completed Google ML Crash Course",
+    "label": "Certification",
+    "output": "Successfully completed Google Machine Learning Crash Course."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "ISTE documentation team sub-committee",
+    "label": "Volunteering / Club Membership",
+    "output": "Served as sub-committee member in ISTE documentation team, contributing to content writing."
+  },
+  {
+    "input": "ISTE documentation team sub-committee",
+    "label": "Volunteering / Club Membership",
+    "output": "Served as sub-committee member in ISTE documentation team, contributing to content writing."
+  },
+  {
+    "input": "Certified in Flutter Bootcamp by Udemy",
+    "label": "Certification",
+    "output": "Earned certification for completing Flutter Bootcamp from Udemy."
+  },
+  {
+    "input": "Created a smart irrigation system using ESP8266 and Firebase",
+    "label": "Project (Big)",
+    "output": "Designed a smart irrigation system using ESP8266 and Firebase for automated watering control."
+  },
+  {
+    "input": "Created a temperature monitor using LM35 and LCD",
+    "label": "Project (Small)",
+    "output": "Designed a temperature monitoring system using LM35 sensor with LCD display."
+  },
+  {
+    "input": "Interned at TCS in Summer 2024 for backend development",
+    "label": "Internship",
+    "output": "Completed a summer internship at TCS in 2024 focusing on backend development."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "Created a smart irrigation system using ESP8266 and Firebase",
+    "label": "Project (Big)",
+    "output": "Designed a smart irrigation system using ESP8266 and Firebase for automated watering control."
+  },
+  {
+    "input": "Built a WiFi-controlled locker with Arduino and servo",
+    "label": "Project (Small)",
+    "output": "Implemented a WiFi-controlled locker system using Arduino and SG90 servo motor."
+  },
+  {
+    "input": "Created a temperature monitor using LM35 and LCD",
+    "label": "Project (Small)",
+    "output": "Designed a temperature monitoring system using LM35 sensor with LCD display."
+  },
+  {
+    "input": "Completed class 12 with 95% from CBSE",
+    "label": "Education",
+    "output": "Secured 95% in Class 12 under CBSE board."
+  },
+  {
+    "input": "Won 1st prize at Hackify 2.0 college hackathon",
+    "label": "Achievement",
+    "output": "Secured First Place at Hackify 2.0 Hackathon hosted at MACE."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "Interned at TCS in Summer 2024 for backend development",
+    "label": "Internship",
+    "output": "Completed a summer internship at TCS in 2024 focusing on backend development."
+  },
+  {
+    "input": "Interned at TCS in Summer 2024 for backend development",
+    "label": "Internship",
+    "output": "Completed a summer internship at TCS in 2024 focusing on backend development."
+  },
+  {
+    "input": "Created a smart irrigation system using ESP8266 and Firebase",
+    "label": "Project (Big)",
+    "output": "Designed a smart irrigation system using ESP8266 and Firebase for automated watering control."
+  },
+  {
+    "input": "Certified in Flutter Bootcamp by Udemy",
+    "label": "Certification",
+    "output": "Earned certification for completing Flutter Bootcamp from Udemy."
+  },
+  {
+    "input": "Created a temperature monitor using LM35 and LCD",
+    "label": "Project (Small)",
+    "output": "Designed a temperature monitoring system using LM35 sensor with LCD display."
+  },
+  {
+    "input": "Worked as AI intern at Cognizant",
+    "label": "Internship",
+    "output": "Worked as an Artificial Intelligence intern at Cognizant, developing predictive models."
+  },
+  {
+    "input": "Created a temperature monitor using LM35 and LCD",
+    "label": "Project (Small)",
+    "output": "Designed a temperature monitoring system using LM35 sensor with LCD display."
+  },
+  {
+    "input": "Created a smart irrigation system using ESP8266 and Firebase",
+    "label": "Project (Big)",
+    "output": "Designed a smart irrigation system using ESP8266 and Firebase for automated watering control."
+  },
+  {
+    "input": "Won 1st prize at Hackify 2.0 college hackathon",
+    "label": "Achievement",
+    "output": "Secured First Place at Hackify 2.0 Hackathon hosted at MACE."
+  },
+  {
+    "input": "Worked as AI intern at Cognizant",
+    "label": "Internship",
+    "output": "Worked as an Artificial Intelligence intern at Cognizant, developing predictive models."
+  },
+  {
+    "input": "Interned at TCS in Summer 2024 for backend development",
+    "label": "Internship",
+    "output": "Completed a summer internship at TCS in 2024 focusing on backend development."
+  },
+  {
+    "input": "IEEE ComSoc member and active in college events",
+    "label": "Volunteering / Club Membership",
+    "output": "Active member of IEEE Communications Society (ComSoc), participated in multiple technical events."
+  },
+  {
+    "input": "IEEE ComSoc member and active in college events",
+    "label": "Volunteering / Club Membership",
+    "output": "Active member of IEEE Communications Society (ComSoc), participated in multiple technical events."
+  },
+  {
+    "input": "Explored REST APIs and how to connect Flutter with backend",
+    "label": "Topic Learned",
+    "output": "Explored REST APIs and integrated Flutter frontend with backend services."
+  },
+  {
+    "input": "Explored REST APIs and how to connect Flutter with backend",
+    "label": "Topic Learned",
+    "output": "Explored REST APIs and integrated Flutter frontend with backend services."
+  },
+  {
+    "input": "Completed Google ML Crash Course",
+    "label": "Certification",
+    "output": "Successfully completed Google Machine Learning Crash Course."
+  },
+  {
+    "input": "Created a smart irrigation system using ESP8266 and Firebase",
+    "label": "Project (Big)",
+    "output": "Designed a smart irrigation system using ESP8266 and Firebase for automated watering control."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "ISTE documentation team sub-committee",
+    "label": "Volunteering / Club Membership",
+    "output": "Served as sub-committee member in ISTE documentation team, contributing to content writing."
+  },
+  {
+    "input": "Certified in Flutter Bootcamp by Udemy",
+    "label": "Certification",
+    "output": "Earned certification for completing Flutter Bootcamp from Udemy."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "Interned at TCS in Summer 2024 for backend development",
+    "label": "Internship",
+    "output": "Completed a summer internship at TCS in 2024 focusing on backend development."
+  },
+  {
+    "input": "Completed class 12 with 95% from CBSE",
+    "label": "Education",
+    "output": "Secured 95% in Class 12 under CBSE board."
+  },
+  {
+    "input": "Explored REST APIs and how to connect Flutter with backend",
+    "label": "Topic Learned",
+    "output": "Explored REST APIs and integrated Flutter frontend with backend services."
+  },
+  {
+    "input": "Created a temperature monitor using LM35 and LCD",
+    "label": "Project (Small)",
+    "output": "Designed a temperature monitoring system using LM35 sensor with LCD display."
+  },
+  {
+    "input": "Learned basics of machine learning including supervised and unsupervised models",
+    "label": "Topic Learned",
+    "output": "Studied fundamentals of machine learning, including supervised and unsupervised algorithms."
+  },
+  {
+    "input": "Explored REST APIs and how to connect Flutter with backend",
+    "label": "Topic Learned",
+    "output": "Explored REST APIs and integrated Flutter frontend with backend services."
+  },
+  {
+    "input": "Learned basics of machine learning including supervised and unsupervised models",
+    "label": "Topic Learned",
+    "output": "Studied fundamentals of machine learning, including supervised and unsupervised algorithms."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "Recognized as best project presenter at IEEE Project Expo",
+    "label": "Achievement",
+    "output": "Awarded Best Presenter at IEEE Project Expo for presenting an IoT-based environmental monitor."
+  },
+  {
+    "input": "Explored REST APIs and how to connect Flutter with backend",
+    "label": "Topic Learned",
+    "output": "Explored REST APIs and integrated Flutter frontend with backend services."
+  },
+  {
+    "input": "Built a WiFi-controlled locker with Arduino and servo",
+    "label": "Project (Small)",
+    "output": "Implemented a WiFi-controlled locker system using Arduino and SG90 servo motor."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "Certified in Flutter Bootcamp by Udemy",
+    "label": "Certification",
+    "output": "Earned certification for completing Flutter Bootcamp from Udemy."
+  },
+  {
+    "input": "Developed a Flutter-based music player with real-time equalizer and seekbar",
+    "label": "Project (Big)",
+    "output": "Built a Flutter-based music player app with real-time seekbar, equalizer, and intuitive UI."
+  },
+  {
+    "input": "Studied Electrical Engineering at MACE from 2021 to 2025",
+    "label": "Education",
+    "output": "Completed B.Tech in Electrical and Electronics Engineering from MACE (2021\u20132025)."
+  },
+  {
+    "input": "Interned at TCS in Summer 2024 for backend development",
+    "label": "Internship",
+    "output": "Completed a summer internship at TCS in 2024 focusing on backend development."
+  },
+  {
+    "input": "Built a WiFi-controlled locker with Arduino and servo",
+    "label": "Project (Small)",
+    "output": "Implemented a WiFi-controlled locker system using Arduino and SG90 servo motor."
+  },
+  {
+    "input": "Completed class 12 with 95% from CBSE",
+    "label": "Education",
+    "output": "Secured 95% in Class 12 under CBSE board."
+  },
+  {
+    "input": "Completed Google ML Crash Course",
+    "label": "Certification",
+    "output": "Successfully completed Google Machine Learning Crash Course."
+  },
+  {
+    "input": "Completed class 12 with 95% from CBSE",
+    "label": "Education",
+    "output": "Secured 95% in Class 12 under CBSE board."
+  },
+  {
+    "input": "Won 1st prize at Hackify 2.0 college hackathon",
+    "label": "Achievement",
+    "output": "Secured First Place at Hackify 2.0 Hackathon hosted at MACE."
+  }
+]
