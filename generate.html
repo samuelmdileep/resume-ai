@@ -3,90 +3,204 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Generate Resume – SkillsDoc</title>
-  <link rel="icon" href="/favicon.png" type="image/png"/>
+  <title>Resume Builder – SkillsDoc</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://apis.google.com/js/api.js"></script>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #e5e7eb; height: 100vh; overflow: hidden; }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+    /* A4 Resume Paper */
+    .resume-page {
+      width: 210mm;
+      min-height: 297mm;
+      background: white;
+      margin: 40px auto;
+      padding: 15mm;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      transform-origin: top center;
+      transition: transform 0.2s;
+      position: relative;
+    }
+
+    .ats-section-title {
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border-bottom: 2px solid #1f2937;
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+      margin-top: 24px;
+      font-size: 14px;
+      color: #111827;
+    }
+
+    @media print {
+      body { background: white; height: auto; overflow: visible; }
+      nav, aside, .controls { display: none; }
+      .resume-page { margin: 0; box-shadow: none; width: 100%; height: 100%; transform: none !important; padding: 0; }
+    }
+  </style>
 </head>
-<body class="bg-[#f3e8ff] min-h-screen text-gray-800">
+<body class="flex flex-col">
 
-  <header class="bg-gradient-to-r from-purple-200 via-purple-400 to-purple-100 shadow px-4 py-2 sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <h1 class="text-xl font-bold text-gray-800">🎨 Resume Generator</h1>
-      <a href="resume.html"
-         class="inline-block px-4 py-2 text-sm font-medium bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-all">
-        ← Back to Templates
+  <nav class="h-16 bg-white border-b flex items-center justify-between px-6 z-50 shrink-0">
+    <div class="flex items-center gap-3">
+      <a href="dashboard.html" class="text-gray-500 hover:text-black transition flex items-center gap-2">
+        <span class="text-xl">←</span> Back
       </a>
+      <div class="h-6 w-px bg-gray-300 mx-2"></div>
+      <span id="saveStatus" class="text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded">
+        ✅ Autosaved
+      </span>
     </div>
-  </header>
+    
+    <button onclick="downloadPDF()" class="bg-gray-900 hover:bg-black text-white px-5 py-2 rounded-lg text-sm font-medium transition shadow-lg flex items-center gap-2">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+      Download PDF
+    </button>
+  </nav>
 
-  <main class="max-w-4xl mx-auto px-4 py-10">
-    <section class="bg-white shadow-md rounded-xl p-8 text-gray-900 max-w-3xl mx-auto">
-      <div class="flex justify-between items-start mb-6">
-        <div>
-          <h1 class="text-3xl font-bold text-purple-800" id="resumeName">Student Name</h1>
-          <p class="text-sm text-gray-600" id="resumeTitle">Course Title</p>
-          <p class="text-sm text-gray-600" id="resumeCollege">College Name (Duration)</p>
-          <p class="text-sm text-gray-500" id="resumeContact">📧 email@example.com</p>
+  <div class="flex flex-1 overflow-hidden">
+    
+    <aside class="w-96 bg-white border-r overflow-y-auto p-6 shadow-xl z-20 flex-shrink-0 pb-20">
+      <div class="space-y-6">
+        
+        <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 mb-4">
+          <h3 class="text-xs font-bold text-blue-800 uppercase mb-1">Live Editor</h3>
+          <p class="text-xs text-blue-600">Type below. The resume updates instantly.</p>
         </div>
 
-        <div class="relative group w-24 h-28 border border-gray-300 shadow-sm bg-gray-100 rounded overflow-hidden">
-         <img id="resumePhoto"
-             src="https://ui-avatars.com/api/?name=User"
-             crossorigin="anonymous"
-             alt="Profile"
-             class="w-full h-full object-cover rounded"
-             onerror="this.src='https://ui-avatars.com/api/?name=User';" />
+        <div class="space-y-2 pb-4 border-b border-gray-100">
+            <label class="text-xs font-bold text-gray-400 uppercase">Profile Photo</label>
+            <div class="flex items-center gap-3">
+                <input type="file" id="inPhoto" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 transition cursor-pointer">
+            </div>
+            <button onclick="removePhoto()" id="removePhotoBtn" class="text-xs text-red-500 hover:text-red-700 font-medium hidden">Remove Photo</button>
         </div>
+
+        <div class="space-y-3">
+          <label class="text-xs font-bold text-gray-400 uppercase">Personal Details</label>
+          <input type="text" id="inName" placeholder="Full Name" class="w-full text-sm border-gray-200 rounded-md p-2 border focus:ring-2 focus:ring-purple-500 outline-none" oninput="handleInput()">
+          <input type="text" id="inRole" placeholder="Job Title" class="w-full text-sm border-gray-200 rounded-md p-2 border focus:ring-2 focus:ring-purple-500 outline-none" oninput="handleInput()">
+          <div class="grid grid-cols-2 gap-2">
+            <input type="email" id="inEmail" placeholder="Email" class="w-full text-sm border-gray-200 rounded-md p-2 border focus:ring-2 focus:ring-purple-500 outline-none" oninput="handleInput()">
+            <input type="text" id="inPhone" placeholder="Phone" class="w-full text-sm border-gray-200 rounded-md p-2 border focus:ring-2 focus:ring-purple-500 outline-none" oninput="handleInput()">
+          </div>
+          <input type="text" id="inLocation" placeholder="City, Country" class="w-full text-sm border-gray-200 rounded-md p-2 border focus:ring-2 focus:ring-purple-500 outline-none" oninput="handleInput()">
+          <input type="text" id="inLink" placeholder="LinkedIn / Portfolio" class="w-full text-sm border-gray-200 rounded-md p-2 border focus:ring-2 focus:ring-purple-500 outline-none" oninput="handleInput()">
+        </div>
+
+        <div class="space-y-2">
+          <label class="text-xs font-bold text-gray-400 uppercase">Professional Summary</label>
+          <textarea id="inSummary" rows="4" placeholder="Briefly describe your experience and goals..." class="w-full text-sm border-gray-200 rounded-md p-2 border focus:ring-2 focus:ring-purple-500 outline-none resize-none" oninput="handleInput()"></textarea>
+        </div>
+
+        <div class="space-y-2">
+          <label class="text-xs font-bold text-gray-400 uppercase">Technical Skills</label>
+          <textarea id="inSkills" rows="3" placeholder="Java, Python, React, Project Management, SEO..." class="w-full text-sm border-gray-200 rounded-md p-2 border focus:ring-2 focus:ring-purple-500 outline-none resize-none" oninput="handleInput()"></textarea>
+        </div>
+
+        <div class="space-y-3">
+          <label class="text-xs font-bold text-gray-400 uppercase">Education</label>
+          <input type="text" id="inCollege" placeholder="University Name" class="w-full text-sm border-gray-200 rounded-md p-2 border focus:ring-2 focus:ring-purple-500 outline-none" oninput="handleInput()">
+          <input type="text" id="inCourse" placeholder="Degree / Major" class="w-full text-sm border-gray-200 rounded-md p-2 border focus:ring-2 focus:ring-purple-500 outline-none" oninput="handleInput()">
+          <input type="text" id="inYear" placeholder="Graduation Year" class="w-full text-sm border-gray-200 rounded-md p-2 border focus:ring-2 focus:ring-purple-500 outline-none" oninput="handleInput()">
+        </div>
+
+        <div class="space-y-3">
+            <label class="text-xs font-bold text-gray-400 uppercase">Experience / Projects</label>
+            <input type="text" id="inExpTitle" placeholder="Project or Job Title" class="w-full text-sm border-gray-200 rounded-md p-2 border focus:ring-2 focus:ring-purple-500 outline-none" oninput="handleInput()">
+            <input type="text" id="inExpDate" placeholder="Date (e.g. Jan 2024 - Present)" class="w-full text-sm border-gray-200 rounded-md p-2 border focus:ring-2 focus:ring-purple-500 outline-none" oninput="handleInput()">
+            <textarea id="inExpDesc" rows="5" placeholder="• Bullet point 1&#10;• Bullet point 2" class="w-full text-sm border-gray-200 rounded-md p-2 border focus:ring-2 focus:ring-purple-500 outline-none resize-none" oninput="handleInput()"></textarea>
+        </div>
+
+        <button onclick="clearLocalStorage()" class="w-full text-red-500 text-xs hover:underline mt-4">Reset All Data</button>
+
+      </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto bg-gray-100 relative flex justify-center p-8">
+      
+      <div class="controls fixed bottom-6 right-8 flex gap-2 z-30">
+        <button onclick="changeScale(-0.1)" class="bg-white shadow rounded p-2 hover:bg-gray-50 text-gray-600 font-bold">-</button>
+        <button onclick="changeScale(0.1)" class="bg-white shadow rounded p-2 hover:bg-gray-50 text-gray-600 font-bold">+</button>
       </div>
 
-      <div class="mb-6 relative group">
-        <h2 class="text-xl font-semibold text-purple-700 flex items-center gap-2">
-            Professional Summary 
-            <span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full border border-purple-200">AI Powered</span>
-        </h2>
-        <p class="text-sm mt-1 p-2 rounded hover:bg-gray-50 transition" id="resumeSummary">
-          Click "✨ AI Generate Summary" below to create a professional summary based on your uploaded skills.
-        </p>
-      </div>
+      <div id="resume-preview" class="resume-page">
+        
+        <header class="flex justify-between items-start border-b-2 border-gray-900 pb-6 mb-6">
+          <div class="flex-1 pr-6">
+            <h1 id="outName" class="text-4xl font-extrabold text-gray-900 uppercase tracking-tight mb-2">YOUR NAME</h1>
+            <p id="outRole" class="text-xl text-gray-700 font-medium mb-4">TARGET ROLE</p>
+            
+            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600">
+               <span id="outEmail">email@example.com</span>
+               <span class="text-gray-300">|</span>
+               <span id="outPhone">123-456-7890</span>
+               <span class="text-gray-300">|</span>
+               <span id="outLocation">Location</span>
+               <span class="text-gray-300">|</span>
+               <a href="#" id="outLink" class="text-blue-600 hover:underline">Link</a>
+            </div>
+          </div>
+          
+          <div class="w-28 h-28 flex-shrink-0 bg-gray-100 rounded-md overflow-hidden border border-gray-200">
+             <img id="outPhoto" src="https://ui-avatars.com/api/?name=User&background=random" class="w-full h-full object-cover" crossorigin="anonymous" alt="Profile">
+          </div>
+        </header>
 
-      <div class="mb-6">
-        <h2 class="text-xl font-semibold text-purple-700">Skills</h2>
-        <ul class="list-disc list-inside text-sm mt-1" id="resumeSkills">
-          <li>Loading skills...</li>
-        </ul>
-      </div>
+        <section class="mb-6">
+            <h2 class="ats-section-title">Professional Summary</h2>
+            <p id="outSummary" class="text-sm text-gray-800 leading-relaxed text-justify">
+                Start typing in the sidebar to fill your summary...
+            </p>
+        </section>
 
-      <div class="mb-6">
-        <h2 class="text-xl font-semibold text-purple-700">Projects</h2>
-        <ul class="text-sm mt-1" id="resumeProjects">
-          <li><strong>Project Portfolio</strong> – See attached skills for verified project certificates.</li>
-        </ul>
-      </div>
+        <section class="mb-6">
+            <h2 class="ats-section-title">Core Competencies</h2>
+            <p id="outSkills" class="text-sm text-gray-800 leading-relaxed font-medium">
+                </p>
+        </section>
 
-      <div class="flex flex-wrap gap-3 mt-6 border-t pt-6">
-        <button onclick="generateAIContent()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded shadow flex items-center gap-2">
-            ✨ AI Generate Summary
-        </button>
-        <button onclick="analyzeResumeATS()" class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded shadow flex items-center gap-2">
-            📊 Check ATS Score
-        </button>
+        <section class="mb-6">
+            <h2 class="ats-section-title">Professional Experience</h2>
+            <div class="mb-4">
+                <div class="flex justify-between items-baseline mb-1">
+                    <h3 id="outExpTitle" class="font-bold text-gray-900 text-sm">Project / Job Title</h3>
+                    <span id="outExpDate" class="text-sm text-gray-600 font-medium">Date</span>
+                </div>
+                <div id="outExpDesc" class="text-sm text-gray-800 space-y-1 ml-1 whitespace-pre-line">
+                    • Description points will appear here.
+                </div>
+            </div>
+        </section>
 
-        <button onclick="downloadResumePDF()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow ml-auto">
-            📄 Download PDF
-        </button>
+        <section class="mb-6">
+            <h2 class="ats-section-title">Education</h2>
+            <div class="flex justify-between items-baseline mb-1">
+                <h3 id="outCollege" class="font-bold text-gray-900 text-sm">University Name</h3>
+                <span id="outYear" class="text-sm text-gray-600 font-medium">Year</span>
+            </div>
+            <p id="outCourse" class="text-sm text-gray-700 italic">Degree Name</p>
+        </section>
+
       </div>
-    </section>
-  </main>
+    </main>
+  </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
-    // 1. YOUR NEW FIREBASE CONFIG
+    // ✅ FIREBASE CONFIG
     const firebaseConfig = {
       apiKey: "AIzaSyCn3sLUtlC2q0EXguvQr7HS3ocol4k-Gtg",
       authDomain: "resume-ai-6c8ce.firebaseapp.com",
@@ -100,155 +214,143 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
     
-// 2. YOUR GEMINI API KEY
-const GEMINI_API_KEY = "AIzaSyBh9jjG6PZzSKJxUgKnpjm0df-lIVboVX0";
+    let currentScale = 1;
 
-    let currentUserData = null;
-    let currentSkills = [];
-
-    // Load Data on Startup
+    // --- 1. AUTH & DATA LOADING ---
     onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        window.currentUid = user.uid;
-        
-        // Fetch Profile
-        const docSnap = await getDoc(doc(db, "users", user.uid));
-        if (docSnap.exists()) {
-          currentUserData = docSnap.data();
-          updateUI(currentUserData);
-        }
+      // Load saved text data from LocalStorage (Priority 1)
+      const savedData = localStorage.getItem('resumeData');
+      if (savedData) {
+          populateFields(JSON.parse(savedData));
+      } else if (user) {
+          // Fallback to Firebase Data (Priority 2) if no local save
+          const docSnap = await getDoc(doc(db, "users", user.uid));
+          if (docSnap.exists()) {
+              const dbData = docSnap.data();
+              populateFields({
+                  inName: dbData.displayName,
+                  inEmail: dbData.email,
+                  inRole: dbData.course,
+                  inCollege: dbData.college,
+                  inCourse: dbData.course
+              });
+          }
+      }
 
-        // Fetch Skills
-        const q = query(collection(db, "skills"), where("uid", "==", user.uid));
-        const skillSnap = await getDocs(q);
-        const skillsList = document.getElementById("resumeSkills");
-        skillsList.innerHTML = "";
-        
-        if (!skillSnap.empty) {
-            skillSnap.forEach(doc => {
-            const s = doc.data();
-            currentSkills.push(`${s.title}`);
-            const li = document.createElement("li");
-            li.textContent = s.title;
-            skillsList.appendChild(li);
-            });
-        } else {
-            skillsList.innerHTML = "<li>No skills added yet.</li>";
-        }
-
-      } else {
-        // Redirect to login if not logged in
-        window.location.href = "login.html";
+      // Load saved PHOTO from LocalStorage
+      const savedPhoto = localStorage.getItem('resumePhotoData');
+      if (savedPhoto) {
+          document.getElementById('outPhoto').src = savedPhoto;
+          document.getElementById('removePhotoBtn').classList.remove('hidden');
       }
     });
 
-    function updateUI(data) {
-        if(data.displayName) document.getElementById("resumeName").innerText = data.displayName;
-        if(data.course) document.getElementById("resumeTitle").innerText = data.course;
-        if(data.college) document.getElementById("resumeCollege").innerText = `${data.college} (${data.duration || ''})`;
-        if(data.email) document.getElementById("resumeContact").innerText = `📧 ${data.email}`;
-        if(data.photoURL) document.getElementById("resumePhoto").src = data.photoURL;
-    }
-
-    // ---------------------------------------------------------
-    // 🤖 AI FEATURE 1: Generate Summary
-    // ---------------------------------------------------------
-    window.generateAIContent = async function() {
-        if (!currentUserData) return alert("User data not loaded yet.");
-
-        const summaryBox = document.getElementById("resumeSummary");
-        const originalText = summaryBox.innerText;
-        summaryBox.innerHTML = "<i>✨ Gemini is writing your summary...</i>";
-        summaryBox.classList.add("animate-pulse");
-
-        const prompt = `
-            You are an expert resume writer. 
-            Student Profile: ${currentUserData.displayName}, ${currentUserData.course}.
-            Skills List: ${currentSkills.join(", ")}.
-            
-            Task: Write a professional, punchy resume summary (max 35 words) for this student. 
-            Focus on their skills and potential.
-            Do not use markdown formatting. Just plain text.
-        `;
-
-        try {
-            const text = await callGemini(prompt);
-            summaryBox.classList.remove("animate-pulse");
-            summaryBox.innerText = text;
-        } catch (e) {
-            console.error(e);
-            alert("AI Error: " + e.message);
-            summaryBox.innerText = originalText;
-            summaryBox.classList.remove("animate-pulse");
+    // --- 2. IMAGE UPLOAD LOGIC ---
+    const photoInput = document.getElementById('inPhoto');
+    photoInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgData = e.target.result;
+                document.getElementById('outPhoto').src = imgData;
+                // Save image string to local storage
+                localStorage.setItem('resumePhotoData', imgData);
+                document.getElementById('removePhotoBtn').classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
         }
-    }
+    });
 
-    // ---------------------------------------------------------
-    // 📊 AI FEATURE 2: ATS Analyzer
-    // ---------------------------------------------------------
-    window.analyzeResumeATS = async function() {
-        const summaryText = document.getElementById("resumeSummary").innerText;
-        if (summaryText.includes("Gemini is writing") || summaryText.includes("Click")) {
-            return alert("Please generate a summary first!");
-        }
+    window.removePhoto = () => {
+        const defaultImg = "https://ui-avatars.com/api/?name=User&background=random";
+        document.getElementById('outPhoto').src = defaultImg;
+        document.getElementById('inPhoto').value = ""; // Reset input
+        localStorage.removeItem('resumePhotoData');
+        document.getElementById('removePhotoBtn').classList.add('hidden');
+    };
 
-        alert("🔍 Analyzing your resume against ATS standards...");
-
-        const prompt = `
-            Act as an Applicant Tracking System (ATS) scanner.
-            Analyze this candidate profile:
-            Role: ${currentUserData.course}
-            Skills: ${currentSkills.join(", ")}
-            Summary: "${summaryText}"
-
-            Output ONLY valid JSON like this:
-            {
-                "score": 85,
-                "missing_keywords": ["Keyword1", "Keyword2"],
-                "verdict": "One short sentence verdict."
-            }
-        `;
-
-        try {
-            const text = await callGemini(prompt);
-            // Clean markdown if Gemini adds it
-            const jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();
-            const data = JSON.parse(jsonStr);
-
-            alert(`📊 ATS Score: ${data.score}/100\n\n💡 Verdict: ${data.verdict}\n\n⚠️ Missing Keywords: ${data.missing_keywords.join(", ")}`);
-        } catch (e) {
-            console.error(e);
-            alert("Analysis failed. Try again.");
-        }
-    }
-
-    // 🔌 Helper: Call Gemini API
-    async function callGemini(promptText) {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-        const response = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
-        });
+    // --- 3. LIVE SYNC & AUTOSAVE ---
+    window.handleInput = function() {
+        // Sync Inputs -> Outputs
+        syncText('inName', 'outName', 'YOUR NAME');
+        syncText('inRole', 'outRole', 'TARGET ROLE');
+        syncText('inEmail', 'outEmail', 'email@example.com');
+        syncText('inPhone', 'outPhone', '123-456-7890');
+        syncText('inLocation', 'outLocation', 'City, Country');
+        syncText('inLink', 'outLink', 'Link');
         
-        if (!response.ok) throw new Error("Gemini API Error: " + response.statusText);
+        syncText('inSummary', 'outSummary', 'Summary text...');
+        syncText('inSkills', 'outSkills', 'Skills...');
+        
+        syncText('inCollege', 'outCollege', 'University');
+        syncText('inCourse', 'outCourse', 'Degree');
+        syncText('inYear', 'outYear', 'Year');
 
-        const data = await response.json();
-        return data.candidates[0].content.parts[0].text;
+        syncText('inExpTitle', 'outExpTitle', 'Job Title');
+        syncText('inExpDate', 'outExpDate', 'Date');
+        syncText('inExpDesc', 'outExpDesc', '• Description');
+
+        saveToLocalStorage();
+    };
+
+    function syncText(inId, outId, def) {
+        const val = document.getElementById(inId).value;
+        document.getElementById(outId).textContent = val || def;
     }
 
-    // PDF Download Logic
-    window.downloadResumePDF = function() {
-        const element = document.querySelector("section");
+    function saveToLocalStorage() {
+        const data = {};
+        const inputs = document.querySelectorAll('input:not([type="file"]), textarea');
+        inputs.forEach(input => {
+            data[input.id] = input.value;
+        });
+        localStorage.setItem('resumeData', JSON.stringify(data));
+        
+        const status = document.getElementById('saveStatus');
+        status.innerText = "⏳ Saving...";
+        setTimeout(() => status.innerText = "✅ Autosaved", 500);
+    }
+
+    function populateFields(data) {
+        for (const [key, value] of Object.entries(data)) {
+            const el = document.getElementById(key);
+            if (el) el.value = value;
+        }
+        window.handleInput(); 
+    }
+
+    window.clearLocalStorage = () => {
+        if(confirm("Reset all resume data?")) {
+            localStorage.removeItem('resumeData');
+            localStorage.removeItem('resumePhotoData');
+            location.reload();
+        }
+    };
+
+    // --- 4. DOWNLOAD & UTILS ---
+    window.changeScale = (d) => {
+        currentScale = Math.min(Math.max(currentScale + d, 0.5), 1.5);
+        document.getElementById('resume-preview').style.transform = `scale(${currentScale})`;
+    };
+
+    window.downloadPDF = () => {
+        const element = document.getElementById('resume-preview');
+        const originalTransform = element.style.transform;
+        element.style.transform = 'none';
+
         const opt = {
-          margin:       0.5,
-          filename:     'SkillsDoc_Resume.pdf',
-          image:        { type: 'jpeg', quality: 0.98 },
-          html2canvas:  { scale: 2 },
-          jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            margin: 0,
+            filename: `Resume_${document.getElementById('inName').value || 'MyResume'}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 3, useCORS: true }, 
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
-        html2pdf().set(opt).from(element).save();
-    }
+
+        html2pdf().set(opt).from(element).save().then(() => {
+            element.style.transform = originalTransform;
+        });
+    };
   </script>
 </body>
 </html>

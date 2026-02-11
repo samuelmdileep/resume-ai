@@ -5,34 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard – SkillsDoc</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script>
+    // Initialize PDF.js worker
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet" />
   <style>
     body { font-family: 'Outfit', sans-serif; }
+    
     .glass-card {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.5);
       box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .glass-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(31, 38, 135, 0.15);
+    }
+    
+    .resume-preview {
+      background: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .blob {
+      position: absolute;
+      filter: blur(80px);
+      z-index: -1;
+      opacity: 0.6;
+      animation: float 10s infinite ease-in-out;
+    }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(20px, -20px); }
     }
   </style>
 </head>
 <body class="bg-gray-50 min-h-screen relative overflow-hidden flex flex-col">
 
+  <div class="blob bg-purple-400 w-96 h-96 rounded-full top-0 left-0"></div>
+  <div class="blob bg-indigo-400 w-80 h-80 rounded-full bottom-0 right-0"></div>
+
   <nav class="flex justify-between items-center p-6 relative z-10 mx-4 mt-4 glass-card rounded-2xl">
     <div class="flex items-center gap-3">
       <div class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-2 rounded-lg shadow-lg">
-        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
       </div>
       <div>
         <span class="text-xl font-bold text-gray-800 tracking-tight">SkillsDoc</span>
-        <span class="text-xs text-purple-600 block font-medium">Local Engine v2.0</span>
+        <span class="text-xs text-purple-600 block font-medium">AI Career Architect</span>
       </div>
     </div>
     
@@ -54,82 +80,127 @@
 
     <div id="returningUserView" class="hidden w-full animate-fade-in-up">
         <div class="flex flex-col md:flex-row gap-8 items-start">
-            <div class="w-full md:w-5/12 glass-card rounded-xl p-8 border border-gray-200">
-                <h2 class="text-xl font-bold text-gray-900 mb-2">👋 Welcome Back!</h2>
-                <h1 id="previewName" class="text-3xl font-bold text-purple-700 mb-1">User Name</h1>
-                <p id="previewRole" class="text-gray-600 font-medium text-lg">Role Title</p>
-                <div class="mt-6 flex flex-col gap-3">
-                    <a href="generate.html" class="bg-purple-600 hover:bg-purple-700 text-center text-white px-6 py-3 rounded-xl font-bold shadow-lg transition">✏️ Edit Resume</a>
-                    <a href="app.html" class="bg-gray-100 hover:bg-gray-200 text-center text-gray-800 px-6 py-3 rounded-xl font-medium shadow-sm transition">📂 Manage Skills</a>
+            
+            <div class="w-full md:w-5/12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    📄 Latest Resume
+                    <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full border border-green-200">Ready</span>
+                </h2>
+                
+                <div class="resume-preview rounded-xl p-8 h-[500px] flex flex-col relative overflow-hidden border border-gray-200 group">
+                    <div class="border-b-2 border-gray-800 pb-4 mb-4">
+                        <h1 id="previewName" class="text-3xl font-bold text-gray-900 uppercase tracking-wider">User Name</h1>
+                        <p id="previewRole" class="text-purple-600 font-medium text-lg mt-1">Role Title</p>
+                    </div>
+                    <div class="space-y-4 opacity-60">
+                        <div class="h-2 bg-gray-200 rounded w-full"></div>
+                        <div class="h-2 bg-gray-200 rounded w-5/6"></div>
+                        <div class="mt-8 mb-2 font-bold text-sm text-gray-400">EXPERIENCE</div>
+                        <div class="h-2 bg-gray-200 rounded w-full"></div>
+                    </div>
+                    <div class="absolute inset-0 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 gap-3">
+                        <a href="generate.html" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-full font-bold shadow-lg transform hover:scale-105 transition flex items-center gap-2">
+                            <span>✏️</span> Edit Resume
+                        </a>
+                        <a href="app.html" class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-6 py-2 rounded-full font-medium shadow-sm flex items-center gap-2">
+                            <span>📂</span> View Profile
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="w-full md:w-7/12">
-                <div class="glass-card p-6 rounded-xl border-l-4 border-indigo-500 flex justify-between items-center cursor-pointer hover:bg-purple-50 transition" onclick="switchView('newUserView')">
+
+            <div class="w-full md:w-7/12 space-y-6">
+                <div class="glass-card p-6 rounded-xl border-l-4 border-indigo-500 flex justify-between items-center">
                     <div>
-                        <h3 class="font-bold text-gray-900">Start Over?</h3>
+                        <h3 class="font-bold text-gray-900">Want to start fresh?</h3>
                         <p class="text-sm text-gray-500">Upload a new resume to restart.</p>
                     </div>
-                    <span class="text-indigo-600 font-bold text-2xl">→</span>
+                    <button onclick="switchView('newUserView')" class="text-indigo-600 font-bold hover:underline">Create New →</button>
+                </div>
+                
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex justify-between items-end mb-2">
+                        <h3 class="font-bold text-gray-700">ATS Optimization</h3>
+                        <span class="text-2xl font-bold text-green-600">Active</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-green-600 h-2.5 rounded-full" style="width: 85%"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Your profile is synced with Gemini AI.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="newUserView" class="hidden w-full text-center max-w-5xl animate-fade-in-up">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Build Your Profile</h1>
-        <p class="text-lg text-gray-600 mb-10">Scan your resume instantly (No AI required).</p>
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">How do you want to start?</h1>
+        <p class="text-lg text-gray-600 mb-10">Choose the best way to build your professional profile today.</p>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div onclick="openUploadModal()" class="glass-card rounded-2xl p-8 cursor-pointer group text-center hover:border-purple-500 transition relative">
-                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">📤</div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Scan Resume</h3>
-                <p class="text-gray-500 text-sm">Upload PDF/Word or Paste Text.</p>
+            <div onclick="openUploadModal()" class="glass-card rounded-2xl p-8 cursor-pointer group text-center relative overflow-hidden hover:border-purple-500 transition">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition text-2xl">📤</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Upload Old Resume</h3>
+                <p class="text-gray-500 text-sm">Drag & Drop your PDF. AI extracts your profile & skills instantly.</p>
             </div>
+
             <a href="app.html" class="glass-card rounded-2xl p-8 cursor-pointer group text-center hover:border-blue-500 transition">
-                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">✍️</div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Manual Entry</h3>
-                <p class="text-gray-500 text-sm">Type your details from scratch.</p>
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition text-2xl">✍️</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Create from Scratch</h3>
+                <p class="text-gray-500 text-sm">Manually build a verified portfolio in our editor.</p>
             </a>
+
             <a href="generate.html" class="glass-card rounded-2xl p-8 cursor-pointer group text-center hover:border-green-500 transition border-green-200 bg-green-50/30">
-                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">🚀</div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Resume Builder</h3>
-                <p class="text-gray-500 text-sm">Skip setup, go to builder.</p>
+                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition text-2xl">🚀</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Just Generate</h3>
+                <p class="text-gray-500 text-sm">Skip setup and go directly to the resume builder.</p>
             </a>
         </div>
+        
+        <button onclick="switchView('returningUserView')" class="mt-8 text-gray-400 hover:text-gray-600 text-sm underline hidden" id="backToPreviewBtn">
+            ← Back to Resume Preview
+        </button>
     </div>
+
   </main>
 
   <div id="uploadModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl w-full max-w-2xl p-8 shadow-2xl relative">
-      <button onclick="closeUploadModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl">×</button>
-      <h2 class="text-2xl font-bold text-gray-800 mb-2">Upload or Paste Resume</h2>
+    <div class="bg-white rounded-2xl w-full max-w-xl p-8 shadow-2xl relative text-center">
       
-      <div id="dropZone" class="border-2 border-dashed border-purple-300 rounded-xl bg-purple-50 p-6 cursor-pointer hover:bg-purple-100 transition relative text-center">
-          <input type="file" id="fileInput" accept=".pdf,.docx,.doc" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+      <button onclick="closeUploadModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl">×</button>
+      
+      <h2 class="text-2xl font-bold text-gray-800 mb-2">Upload Your Resume</h2>
+      <p class="text-gray-500 mb-6">Support for PDF only. AI will extract your details.</p>
+
+      <div id="dropZone" class="border-2 border-dashed border-purple-300 rounded-xl bg-purple-50 p-10 cursor-pointer hover:bg-purple-100 transition relative">
+<input type="file" id="fileInput" 
+       accept=".pdf,.docx,.doc" 
+       class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+       
+<p class="text-sm text-gray-500 mt-1">PDF or Word (.docx)</p>          
           <div class="pointer-events-none">
-              <div class="text-3xl mb-2">📄</div>
-              <p class="font-bold text-purple-700">Click to Upload PDF/Word</p>
+              <div class="text-4xl mb-3">📄</div>
+              <p class="font-bold text-purple-700 text-lg">Click to Upload or Drag & Drop</p>
+              <p class="text-sm text-gray-500 mt-1">PDF Files only</p>
           </div>
       </div>
 
-      <div class="mt-4">
-          <label class="text-xs font-bold text-gray-500 uppercase">Resume Text (Editable)</label>
-          <textarea id="resumeText" class="w-full h-40 border p-3 rounded-lg text-sm bg-gray-50 focus:ring-2 ring-purple-500 outline-none" placeholder="If upload fails, PASTE your resume text here..."></textarea>
+      <div id="uploadStatus" class="mt-4 text-sm font-medium text-gray-600 hidden">
+          ⏳ Reading file...
       </div>
 
-      <div id="uploadStatus" class="mt-2 text-sm font-medium text-gray-600 hidden">⏳ Reading...</div>
-
-      <button id="processBtn" class="mt-4 w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold shadow-lg transition">
-          🔍 Scan for Skills
+      <button id="processBtn" disabled class="mt-6 w-full py-3 rounded-xl bg-gray-300 text-white font-bold cursor-not-allowed transition">
+          Waiting for file...
       </button>
+
     </div>
   </div>
 
-  <script type="module">
+ <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, updateDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
+    // ✅ 1. FIREBASE CONFIG
     const firebaseConfig = {
       apiKey: "AIzaSyCn3sLUtlC2q0EXguvQr7HS3ocol4k-Gtg",
       authDomain: "resume-ai-6c8ce.firebaseapp.com",
@@ -139,19 +210,16 @@
       appId: "1:80667329410:web:00d0783305e073a9e0c59b"
     };
 
+    // ✅ 2. GEMINI API KEY
+    const GEMINI_API_KEY = "AIzaSyCsMSOAkZ3YPTVnZHFR8BudzORVUqYVBWc";
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
     let currentUid = null;
+    let extractedText = "";
 
-    // 📚 EXPANDED LOCAL DATABASE (Matches your resume skills)
-    const SKILL_DB = [
-        "Arduino", "ESP8266", "IoT", "Sensors", "Circuit Design", "PCB", "Fusion 360", "AutoCAD", "AutoCAD Electrical",
-        "Flutter", "Dart", "Firebase", "HTML", "CSS", "JavaScript", "JS", "Python", "C", "C++",
-        "Machine Learning", "ML", "Kali Linux", "Cybersecurity", "Embedded Systems",
-        "React", "Node.js", "SQL", "Git", "GitHub", "Microsoft Office", "VS Code"
-    ];
-
+    // Auth Logic
     onAuthStateChanged(auth, async (user) => {
       if (!user) { window.location.href = "login.html"; return; }
       currentUid = user.uid;
@@ -159,22 +227,28 @@
       document.getElementById("navUserImg").src = user.photoURL || "https://ui-avatars.com/api/?name=User";
 
       try {
-        const docSnap = await getDoc(doc(db, "users", user.uid));
-        document.getElementById("loadingState").classList.add("hidden");
-        if (docSnap.exists() && (docSnap.data().course || docSnap.data().college)) {
+          const docSnap = await getDoc(doc(db, "users", user.uid));
+          document.getElementById("loadingState").classList.add("hidden");
+
+          if (docSnap.exists() && (docSnap.data().course || docSnap.data().college)) {
             const data = docSnap.data();
             document.getElementById("previewName").textContent = data.displayName || user.displayName;
             document.getElementById("previewRole").textContent = data.course || "Your Role";
             document.getElementById("returningUserView").classList.remove("hidden");
-        } else {
+          } else {
             document.getElementById("newUserView").classList.remove("hidden");
-        }
+          }
       } catch (e) {
-        document.getElementById("newUserView").classList.remove("hidden");
+          console.error("Firestore Error:", e);
+          document.getElementById("newUserView").classList.remove("hidden");
       }
     });
 
-    document.getElementById("logoutBtn").addEventListener("click", () => signOut(auth).then(() => window.location.href = "login.html"));
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      signOut(auth).then(() => window.location.href = "login.html");
+    });
+
+    // UI Toggles
     window.switchView = (id) => {
         document.getElementById("returningUserView").classList.add("hidden");
         document.getElementById("newUserView").classList.add("hidden");
@@ -183,11 +257,11 @@
     window.openUploadModal = () => document.getElementById("uploadModal").classList.remove("hidden");
     window.closeUploadModal = () => document.getElementById("uploadModal").classList.add("hidden");
 
-    // FILE HANDLING
+    // 📂 FILE READING LOGIC
     const fileInput = document.getElementById("fileInput");
     const dropZone = document.getElementById("dropZone");
-    const resumeTextArea = document.getElementById("resumeText");
     const statusText = document.getElementById("uploadStatus");
+    const processBtn = document.getElementById("processBtn");
 
     dropZone.addEventListener("dragover", (e) => { e.preventDefault(); dropZone.classList.add("bg-purple-200"); });
     dropZone.addEventListener("dragleave", (e) => { e.preventDefault(); dropZone.classList.remove("bg-purple-200"); });
@@ -197,74 +271,109 @@
     async function handleFile(file) {
         statusText.classList.remove("hidden");
         statusText.textContent = `⏳ Reading ${file.name}...`;
-        
+        extractedText = ""; 
+
         try {
             const arrayBuffer = await file.arrayBuffer();
-            let text = "";
 
             if (file.type === "application/pdf") {
                 const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                for (let i = 1; i <= Math.min(pdf.numPages, 3); i++) {
+                const maxPages = Math.min(pdf.numPages, 3);
+                for (let i = 1; i <= maxPages; i++) {
                     const page = await pdf.getPage(i);
-                    const content = await page.getTextContent();
-                    text += content.items.map(item => item.str).join(" ") + "\n";
+                    const textContent = await page.getTextContent();
+                    extractedText += textContent.items.map(item => item.str).join(" ") + "\n";
                 }
-            } else if (file.name.endsWith(".docx")) {
-                const result = await mammoth.extractRawText({ arrayBuffer });
-                text = result.value;
-            } else { throw new Error("Only PDF or DOCX allowed."); }
+            } else if (file.name.endsWith(".docx") || file.type.includes("wordprocessingml")) {
+                const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+                extractedText = result.value;
+            } else {
+                throw new Error("Please upload a PDF or DOCX file.");
+            }
 
-            resumeTextArea.value = text; // 👈 POPULATE TEXT AREA
-            statusText.textContent = "✅ File read! You can edit the text above.";
+            statusText.textContent = "✅ File read! Ready to analyze.";
+            processBtn.disabled = false;
+            processBtn.textContent = "✨ Analyze with Gemini AI";
+            processBtn.classList.remove("bg-gray-300", "cursor-not-allowed");
+            processBtn.classList.add("bg-purple-600", "hover:bg-purple-700", "text-white", "shadow-lg");
+            processBtn.onclick = processWithGemini;
+
         } catch (err) {
+            console.error(err);
             statusText.textContent = "❌ Error: " + err.message;
         }
     }
 
-    // 🔍 SCAN LOGIC
-    document.getElementById("processBtn").onclick = async function() {
-        const text = resumeTextArea.value.trim();
-        if(!text) return alert("Please upload a file or paste text first.");
+   // 🧠 AI ANALYSIS LOGIC (Fixed Model)
+    window.processWithGemini = async function() {
+        const btn = document.getElementById("processBtn");
+        btn.innerHTML = "🧠 Gemini is analyzing...";
+        btn.disabled = true;
 
-        this.innerHTML = "🔍 Scanning...";
-        this.disabled = true;
+        // Clean text to avoid JSON errors
+        const cleanText = extractedText.replace(/"/g, "'").replace(/\n/g, " ").substring(0, 3000);
 
-        // 1. Extract Details
-        const emailMatch = text.match(/[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}/);
-        const email = emailMatch ? emailMatch[0] : auth.currentUser.email;
-        
-        const lines = text.split('\n').filter(l => l.trim().length > 0);
-        let name = "User";
-        if(lines.length > 0 && lines[0].split(" ").length < 5) name = lines[0].trim();
-
-        // 2. Scan Skills
-        const foundSkills = [];
-        const lowerText = text.toLowerCase();
-        
-        SKILL_DB.forEach(skill => {
-            const escaped = skill.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            // Check exact word OR substring match (e.g. catches "IoT" in "IoT-based")
-            if (new RegExp(`\\b${escaped.toLowerCase()}\\b`).test(lowerText) || lowerText.includes(skill.toLowerCase())) {
-                if(!foundSkills.includes(skill)) foundSkills.push(skill);
+        const prompt = `
+            Act as a Resume Parser. Extract details into JSON:
+            {
+                "displayName": "Full Name",
+                "email": "Email",
+                "course": "Job Title/Degree",
+                "college": "University",
+                "skills": ["Skill1", "Skill2", "Skill3", "Skill4"]
             }
-        });
+            Resume Text: "${cleanText}"
+            Output ONLY valid JSON.
+        `;
 
-        // 3. Save
         try {
-            await setDoc(doc(db, "users", currentUid), { displayName: name, email, course: "Student" }, { merge: true });
-            
-            if(foundSkills.length > 0) {
-                const batch = foundSkills.map(s => addDoc(collection(db, "skills"), { uid: currentUid, title: s, desc: "Auto-Scanned", timestamp: Date.now() }));
+            // 👇 CHANGED TO 'gemini-pro' (The stable model)
+// Change from gemini-1.5-flash to gemini-1.5-flash-latest or gemini-2.0-flash
+const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`, {                method: "POST", 
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            });
+
+            if (!res.ok) {
+                const errData = await res.json();
+                throw new Error(errData.error?.message || "API connection failed");
+            }
+
+            const data = await res.json();
+
+            // Safety check
+            if (!data.candidates || data.candidates.length === 0) {
+                throw new Error("AI could not extract data. Try a different file.");
+            }
+
+            const aiText = data.candidates[0].content.parts[0].text.replace(/```json/g, "").replace(/```/g, "").trim();
+            const parsed = JSON.parse(aiText);
+
+            // Save to Firestore
+            await updateDoc(doc(db, "users", currentUid), {
+                displayName: parsed.displayName || "User",
+                email: parsed.email || auth.currentUser.email,
+                course: parsed.course || "Student",
+                college: parsed.college || ""
+            });
+
+            if (parsed.skills && Array.isArray(parsed.skills)) {
+                const batch = parsed.skills.map(s => addDoc(collection(db, "skills"), {
+                    uid: currentUid, title: s, desc: "AI Extracted", timestamp: Date.now()
+                }));
                 await Promise.all(batch);
             }
 
-            alert(`✅ Found ${foundSkills.length} skills! Redirecting...`);
-            window.location.href = "app.html";
+            alert("✅ Import Successful! Redirecting...");
+            window.location.href = "app.html"; 
+
         } catch (err) {
-            alert("Save Error: " + err.message);
-            this.disabled = false;
+            console.error("AI Analysis Error:", err);
+            alert("Analysis failed: " + err.message);
+            btn.innerHTML = "❌ Try Again";
+            btn.disabled = false;
         }
     };
-  </script>
-</body>
+    </script>   
+    </body>
 </html>
